@@ -206,5 +206,5 @@ Use at your own risk. Authors, content developers, administrators of the EtherJa
 or unethical hacking/usage. All information provided for the EtherJack project is provided on an "as is" basis with no warranty or guarantees.
 ## Contact
 RaGeTek - rag3tek@gmail.com
-Project Link: [https://github.com/ragetek/EtherJack](https://github.com/ragetek/EtherJack)
+Project Link: [https://github.com/ndepthsecurity/EtherJack](https://github.com/ndepthsecurity/EtherJack)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
