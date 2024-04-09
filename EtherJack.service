@@ -1,0 +1,13 @@
+[Unit]
+Description=EtherJack Service
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+WorkingDirectory=/usr/local/EtherJack
+ExecStart=/usr/local/EtherJack/EtherJack.sh
+RemainAfterExit=no
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
