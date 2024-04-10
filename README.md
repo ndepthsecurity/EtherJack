@@ -202,16 +202,11 @@ Now its time to test your configuration and hope for the best!!
     have a successfull call back over the Internet and/or a rouge AP beaconing on the radio spectrum.
 
 ## Disclaimer
-Use at your own risk. Authors, content developers, administrators of the EtherJack project assume no responsibility or liability for any errors or omissions in content, 
+EtherJack is licensed under GNU General Public License v3.0. Use at your own risk. Authors, content developers, administrators of the EtherJack project assume no responsibility or liability for any errors or omissions in content, 
 or unethical hacking/usage. All information provided for the EtherJack project is provided on an "as is" basis with no warranty or guarantees.
 
 ## ASSUMPTION OF THE RISK AND AGREEMENT TO INDEMNIFY
-
-By downloading EtherJack you agree to assume any and all risk/liability associated with the downloading and use of EtherJack .  You also agree to indemnify nDepth Security against any liability that arises out of the misuse of EtherJack whether that misuse is intentional or the result of negligence.  In addition, you indemnify nDepth Security against liability arising out of the actions of other individuals who gain access to EtherJack by accessing the device(s) upon which you downloaded EtherJack.
- 
-Please note EtherJack is an open source/open platform tool.  It is not intended for third party sale or distribution.  Any attempts to copy, sale, license and/or distribute EtherJack constitutes “misuse” for purposes of this agreement and is strictly prohibited.
-
-
+By downloading EtherJack you agree to assume any and all risk/liability associated with the downloading and use of EtherJack.  You also agree to indemnify nDepth Security and it's contributors, against any liability that arises out of the misuse of EtherJack whether that misuse is intentional or the result of negligence. In addition, you indemnify nDepth Security against liability arising out of the actions of other individuals who gain access to EtherJack by accessing the device(s) upon which you downloaded EtherJack.
 
 ## Contact
 RaGeTek - rag3tek@gmail.com
