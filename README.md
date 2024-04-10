@@ -1,4 +1,4 @@
-![alt text](https://github.com/ragetek/EtherJack/blob/master/files/EtherJack.png?raw=true)
+![alt text](https://github.com/ndepthsecurity/EtherJack/blob/master/files/EtherJack.png?raw=true)
 ## What is EtherJack?
 EtherJack or "EJ", is a "plug-and-pray" leave behind device that can be used to establish different levels of persistence on a target network
 through a series of software and hardware configurations. EJ was developed by and for pentesters to help support and aid in physical pentesting engagements
