@@ -126,7 +126,7 @@ to edit the appropriate EJ configuration files. Editing/changing any setting out
     # or
     sudo sed -i 's/EJMODE=.*/EJMODE=WIFI/' EtherJack.conf
     ```
-14. Define the payload you want to execute, and copy your payload to the EJ bin/ directory (the payload only gets executed in LAN and PREEST configuration modes) :
+14. Define the payload you want to execute, and copy your payload to the EJ bin/ directory (the payload only gets executed in LAN and PRESET configuration modes) :
     ```sh
     sudo mkdir bin/
     sudo sed -i 's/EJEXE=.*/EJEXE=payload/' EtherJack.conf  # --> "payload" is whatever the name of your payload will be
