@@ -1,7 +1,7 @@
 ---
 name: Feature Suggestion 💡
 about: Suggest a new idea for the project.
-labels: "suggestion-feature"
+labels: "enhancement"
 ---
 
 <!--
