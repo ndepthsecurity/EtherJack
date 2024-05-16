@@ -1,4 +1,4 @@
-![alt text](https://github.com/ndepthsecurity/EtherJack/blob/master/files/EtherJack.png?raw=true)
+![EtherJack Logo](https://github.com/ndepthsecurity/EtherJack/blob/master/files/EtherJack.png?raw=true)
 ## What is EtherJack?
 EtherJack or "EJ", is a "plug-and-pray" leave behind device that can be used to establish different levels of persistence on a target network
 through a series of software and hardware configurations. EJ was developed by and for pentesters to help support and aid in physical pentesting engagements
@@ -6,6 +6,8 @@ through the use of open/available RJ-45 Ethernet ports. EJ helps bring to light 
 network and how poor network security hygiene can lead to devastating consequences. EJ offers a complimentary solution to existing physical pentest-assisting 
 capabilities and allows offensive security practitioners to expand their toolkits used during physical pentests and offers an additional leave-behind component that
 can accommodate most physical constraints and user requirements. As pentesters, we should leave no port untested! 
+### Presentation
+Please see the EtherJack slides from [BSides Harrisburg 2024](https://github.com/ndepthsecurity/EtherJack/blob/docs/EtherJack Presentation - 04102024.pdf).
 ### Whats under the hood?
 EJ runs on the following (recommended) hardware and accessories, which can be searched/found on [Amazon](https://amazon.com):
 * **Raspberry Pi Zero W** or **Zero 2 W**.
