@@ -7,7 +7,7 @@ network and how poor network security hygiene can lead to devastating consequenc
 capabilities and allows offensive security practitioners to expand their toolkits used during physical pentests and offers an additional leave-behind component that
 can accommodate most physical constraints and user requirements. As pentesters, we should leave no port untested! 
 ### Presentation
-Please see the EtherJack slides from [BSides Harrisburg 2024](https://github.com/ndepthsecurity/EtherJack/blob/docs/EtherJack Presentation - 04102024.pdf).
+Please see the EtherJack slides from [BSides Harrisburg 2024](https://github.com/ndepthsecurity/EtherJack/blob/master/docs/EtherJack%20Presentation%20-%2004102024.pdf).
 ### Whats under the hood?
 EJ runs on the following (recommended) hardware and accessories, which can be searched/found on [Amazon](https://amazon.com):
 * **Raspberry Pi Zero W** or **Zero 2 W**.
