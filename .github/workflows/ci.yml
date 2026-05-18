@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  # --------------------------------------------------------------------------
+  # Job 1: static analysis with ShellCheck
+  # --------------------------------------------------------------------------
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck on all scripts
+        # --severity=error — fail only on genuine errors, not style warnings.
+        # The .shellcheckrc in the repo root suppresses SC1091/SC2154 which
+        # are false positives caused by inter-script variable sourcing.
+        run: |
+          find . -name "*.sh" -not -path "./.git/*" \
+            | xargs shellcheck --severity=error
+
+  # --------------------------------------------------------------------------
+  # Job 2: BATS unit / integration tests
+  # --------------------------------------------------------------------------
+  test:
+    name: BATS Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bats-core
+        run: |
+          git clone --depth 1 https://github.com/bats-core/bats-core.git /tmp/bats-core
+          sudo /tmp/bats-core/install.sh /usr/local
+
+      - name: Run test suite
+        run: bats tests/
+
+  # --------------------------------------------------------------------------
+  # Job 3: confirm every script is executable (permissions survive git clone)
+  # --------------------------------------------------------------------------
+  permissions:
+    name: Script Permissions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify all .sh files are executable
+        run: |
+          failed=0
+          while IFS= read -r script; do
+            if [ ! -x "$script" ]; then
+              echo "NOT EXECUTABLE: $script"
+              failed=1
+            fi
+          done < <(find . -name "*.sh" -not -path "./.git/*")
+          exit "$failed"

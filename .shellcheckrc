@@ -1,0 +1,4 @@
+# Variables from sourced conf files appear unassigned to static analysis
+disable=SC2154
+# Not following sourced files — conf files use relative paths by design
+disable=SC1091
