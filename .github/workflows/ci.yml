@@ -11,59 +11,56 @@ on:
       - main
 
 jobs:
-  # --------------------------------------------------------------------------
-  # Job 1: static analysis with ShellCheck
-  # --------------------------------------------------------------------------
-  shellcheck:
-    name: ShellCheck
+  ci:
+    name: Build & Test
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install shellcheck
-        run: sudo apt-get install -y shellcheck
+      # Cache Docker layers so rebuilds are fast when the Dockerfile hasn't changed
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('tests/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
 
-      - name: Run ShellCheck on all scripts
-        # --severity=error — fail only on genuine errors, not style warnings.
-        # The .shellcheckrc in the repo root suppresses SC1091/SC2154 which
-        # are false positives caused by inter-script variable sourcing.
+      - name: Build CI image
+        run: docker build -t etherjack-ci -f tests/Dockerfile .
+
+      # --------------------------------------------------------------------------
+      # ShellCheck — static analysis on all scripts
+      # The .shellcheckrc in the repo root suppresses SC1091/SC2154 which are
+      # false positives caused by inter-script variable sourcing.
+      # --------------------------------------------------------------------------
+      - name: ShellCheck
         run: |
-          find . -name "*.sh" -not -path "./.git/*" \
-            | xargs shellcheck --severity=error
+          docker run --rm -v "$PWD:/etherjack" etherjack-ci \
+            bash -c 'find /etherjack -name "*.sh" -not -path "/etherjack/.git/*" \
+                       | xargs shellcheck --severity=error'
 
-  # --------------------------------------------------------------------------
-  # Job 2: BATS unit / integration tests
-  # --------------------------------------------------------------------------
-  test:
-    name: BATS Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install bats-core
+      # --------------------------------------------------------------------------
+      # BATS unit / integration tests
+      # --------------------------------------------------------------------------
+      - name: BATS Tests
         run: |
-          git clone --depth 1 https://github.com/bats-core/bats-core.git /tmp/bats-core
-          sudo /tmp/bats-core/install.sh /usr/local
+          docker run --rm -v "$PWD:/etherjack" etherjack-ci \
+            bash -c 'cd /etherjack && bats tests/'
 
-      - name: Run test suite
-        run: bats tests/
-
-  # --------------------------------------------------------------------------
-  # Job 3: confirm every script is executable (permissions survive git clone)
-  # --------------------------------------------------------------------------
-  permissions:
-    name: Script Permissions
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Verify all .sh files are executable
+      # --------------------------------------------------------------------------
+      # Confirm every script is executable (permissions survive git clone)
+      # --------------------------------------------------------------------------
+      - name: Script Permissions
         run: |
-          failed=0
-          while IFS= read -r script; do
-            if [ ! -x "$script" ]; then
-              echo "NOT EXECUTABLE: $script"
-              failed=1
-            fi
-          done < <(find . -name "*.sh" -not -path "./.git/*")
-          exit "$failed"
+          docker run --rm -v "$PWD:/etherjack" etherjack-ci bash -c '
+            failed=0
+            while IFS= read -r script; do
+              if [ ! -x "$script" ]; then
+                echo "NOT EXECUTABLE: $script"
+                failed=1
+              fi
+            done < <(find /etherjack -name "*.sh" -not -path "/etherjack/.git/*")
+            exit "$failed"
+          '
