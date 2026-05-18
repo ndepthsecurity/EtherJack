@@ -36,7 +36,7 @@ while [ "$DONE" == "NO" ]; do
 			echo "Network and route setup complete" >>$EJLOG
 			echo "Calling home" >>$EJLOG
 			echo "############### END ROUTEFINDER ###############" >>$EJLOG
-			$CALLHOME
+			systemctl start Etherjack-payload
 		fi
 	done
 done

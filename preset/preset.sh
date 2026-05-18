@@ -50,6 +50,8 @@ case $CONFIG in
 	dhcp|DHCP)
 		echo "Configuring EJ for a DHCP configuration" >>$EJLOG
 		systemctl stop NetworkManager
+		ifconfig eth0 down
+		ifconfig eth0 up
 		systemctl start NetworkManager
 		DONE=NO
 		while [ $DONE == "NO" ]; do
@@ -70,7 +72,7 @@ case $CONFIG in
 				echo "My Gateway is: $DHCPGTW" >>$EJLOG
 				echo "My Nameserver is: $DHCPNS" >>$EJLOG
 				echo "Calling home" >>$EJLOG
-				$CALLHOME
+				systemctl start Etherjack-payload
                         	DONE=YES
 			fi
 		done
