@@ -43,11 +43,34 @@ jobs:
 
       # --------------------------------------------------------------------------
       # BATS unit / integration tests
+      # --report-formatter writes a TAP file to /results while still printing
+      # pretty output to the console; if: always() ensures the artifact is
+      # uploaded even when tests fail so failures are always inspectable.
       # --------------------------------------------------------------------------
       - name: BATS Tests
         run: |
-          docker run --rm -v "$PWD:/etherjack" etherjack-ci \
-            bash -c 'cd /etherjack && bats tests/'
+          mkdir -p test-results
+          docker run --rm \
+            -v "$PWD:/etherjack" \
+            -v "$PWD/test-results:/results" \
+            etherjack-ci \
+            bash -c 'cd /etherjack && bats --report-formatter tap --output /results tests/'
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bats-test-results
+          path: test-results/
+
+      - name: Prune old artifacts (keep last 3)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${{ github.repository }}/actions/artifacts?name=bats-test-results&per_page=100" \
+            --jq '.artifacts | sort_by(.created_at) | reverse | .[3:] | .[].id' \
+          | xargs -r -I{} gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/{}"
 
       # --------------------------------------------------------------------------
       # Confirm every script is executable (permissions survive git clone)
