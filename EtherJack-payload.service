@@ -1,0 +1,11 @@
+[Unit]
+Description=EtherJack Payload
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/EtherJack/bin/ej_callback
+
+[Install]
+WantedBy=multi-user.target
