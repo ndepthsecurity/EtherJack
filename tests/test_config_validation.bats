@@ -100,12 +100,24 @@ load 'helpers/common'
     grep -q "ExecStart=.*EtherJack.sh" "$REPO_ROOT/EtherJack.service"
 }
 
-@test "EtherJack.service requires network-online.target" {
-    grep -q "network-online.target" "$REPO_ROOT/EtherJack.service"
+# ---------------------------------------------------------------------------
+# EtherJack-payload.service
+# ---------------------------------------------------------------------------
+
+@test "EtherJack-payload.service file exists" {
+    [ -f "$REPO_ROOT/EtherJack-payload.service" ]
 }
 
-@test "EtherJack.service has Restart=on-failure" {
-    grep -q "^Restart=on-failure" "$REPO_ROOT/EtherJack.service"
+@test "EtherJack-payload.service ExecStart references ej_callback" {
+    grep -q "ExecStart=.*ej_callback" "$REPO_ROOT/EtherJack-payload.service"
+}
+
+@test "EtherJack-payload.service is Type=oneshot" {
+    grep -q "^Type=oneshot" "$REPO_ROOT/EtherJack-payload.service"
+}
+
+@test "EtherJack-payload.service is WantedBy=multi-user.target" {
+    grep -q "WantedBy=multi-user.target" "$REPO_ROOT/EtherJack-payload.service"
 }
 
 # ---------------------------------------------------------------------------

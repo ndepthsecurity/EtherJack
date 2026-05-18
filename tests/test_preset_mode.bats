@@ -109,9 +109,15 @@ EOF
     [[ "$output" == *"MOCK:systemctl start NetworkManager"* ]]
 }
 
-@test "CONFIG=DHCP eventually executes the payload" {
+@test "CONFIG=DHCP resets eth0 before starting NetworkManager" {
     run_preset DHCP
-    [[ "$output" == *"payload executed"* ]]
+    [[ "$output" == *"MOCK:ifconfig eth0 down"* ]]
+    [[ "$output" == *"MOCK:ifconfig eth0 up"* ]]
+}
+
+@test "CONFIG=DHCP starts the payload service via systemctl" {
+    run_preset DHCP
+    [[ "$output" == *"MOCK:systemctl start Etherjack-payload"* ]]
 }
 
 # ---------------------------------------------------------------------------
