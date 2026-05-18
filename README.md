@@ -233,6 +233,8 @@ or unethical hacking/usage. All information provided for the EtherJack project i
 By downloading EtherJack you agree to assume any and all risk/liability associated with the downloading and use of EtherJack.  You also agree to indemnify nDepth Security and it's contributors, against any liability that arises out of the misuse of EtherJack whether that misuse is intentional or the result of negligence. In addition, you indemnify nDepth Security against liability arising out of the actions of other individuals who gain access to EtherJack by accessing the device(s) upon which you downloaded EtherJack.
 
 ## 📬 Contact
+Email: [etherjack@ndepthsecurity.com](mailto:etherjack@ndepthsecurity.com)
+
 Project Link: [https://github.com/ndepthsecurity/EtherJack](https://github.com/ndepthsecurity/EtherJack)
 
 [nDepth Security](https://ndepthsecurity.com/)
