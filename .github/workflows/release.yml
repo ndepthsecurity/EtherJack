@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  # Run the full CI suite first — no release is published if tests fail
+  test:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    name: Publish Release
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Bundle only the files a user needs on their Pi — no tests or CI machinery
+      - name: Build deployable tarball
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          STAGE="etherjack-${TAG}"
+          mkdir -p "$STAGE"
+          cp -r \
+            EtherJack.sh \
+            EtherJack.conf \
+            EtherJack.service \
+            files \
+            lan \
+            preset \
+            wifi \
+            README.md \
+            LICENSE \
+            "$STAGE/"
+          tar -czf "${STAGE}.tar.gz" "$STAGE/"
+          rm -rf "$STAGE"
+          echo "ARCHIVE=${STAGE}.tar.gz" >> "$GITHUB_ENV"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ARCHIVE }}
+          generate_release_notes: true
