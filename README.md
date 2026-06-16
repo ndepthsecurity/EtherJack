@@ -63,7 +63,7 @@ is knowledgable in pentesting, networking, Linux, etc. These instructions are no
 8. Open a terminal and Git the EtherJack repository:
     ```sh
     cd /usr/local
-    sudo git clone https://github.com/ragetek/EtherJack
+    sudo git clone https://github.com/ndepthsecurity/EtherJack
     ``` 
 9. Install EJ motd:
     ```sh
@@ -85,7 +85,7 @@ is knowledgable in pentesting, networking, Linux, etc. These instructions are no
     sudo systemctl disable sshd.service
     sudo systemctl disable NetworkManager
     sudo systemctl disable bluetooth.service
-    # ensure wlan0 is always set to manual configuration in /etc/network/interfaces when NetworkManager is enabled
+    # ensure wlan0 is always set to manual configuration in /etc/network/interfaces when NetworkManager is disabled
     sudo echo "iface wlan0 inet manual" >> /etc/network/interfaces
     ```
 
