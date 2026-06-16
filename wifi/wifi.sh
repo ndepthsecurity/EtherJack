@@ -37,8 +37,7 @@ iptables -I OUTPUT -o eth0 -d 0.0.0.0/0 -j ACCEPT
 iptables -I INPUT -i eth0 -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -i eth0 -j DROP
 
-
-# Disable NetworkManager and reset eth0 
+# Disable NetworkManager and reset eth0
 echo "Shutting down NetworkManager and resetting eth0 interface" >>$EJLOG
 systemctl stop NetworkManager
 systemctl disable NetworkManager
@@ -52,11 +51,11 @@ echo "nameserver 8.8.8.8" >/etc/resolv.conf
 # Disable ipv6 on eth0
 echo "Ensuring ipv6 is disabled" >>$EJLOG
 if grep -q "net.ipv6.conf.all.disable_ipv6 = 1" /etc/sysctl.conf; then
-        echo "IPV6 already disabled" >>$EJLOG
+    echo "IPV6 already disabled" >>$EJLOG
 else
-        echo "Disabling IPV6" >>$EJLOG
-        echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf
-        sysctl -p
+    echo "Disabling IPV6" >>$EJLOG
+    echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf
+    sysctl -p
 fi
 
 echo "Starting dnsmasq" >>$EJLOG

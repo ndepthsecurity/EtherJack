@@ -22,7 +22,7 @@ setup() {
     create_mock_commands "$MOCK_BIN"
 
     # Override init to record the shutdown call without touching the system
-    cat > "$MOCK_BIN/init" << 'EOF'
+    cat >"$MOCK_BIN/init" <<'EOF'
 #!/bin/bash
 echo "SHUTDOWN: init $*"
 exit 0
@@ -31,14 +31,14 @@ EOF
     export PATH="$MOCK_BIN:$PATH"
 
     # Mock payload (CALLHOME target)
-    cat > "$EJPATH/bin/payload" << 'EOF'
+    cat >"$EJPATH/bin/payload" <<'EOF'
 #!/bin/bash
 echo "payload executed"
 EOF
     chmod +x "$EJPATH/bin/payload"
 
     # EtherJack.conf — sourced via ../../EtherJack.conf from the engagement dir
-    cat > "$EJPATH/EtherJack.conf" << EOF
+    cat >"$EJPATH/EtherJack.conf" <<EOF
 EJMODE=PRESET
 EJPATH=$EJPATH
 ENGAGEMENT=$ENGAGEMENT
@@ -55,7 +55,7 @@ EOF
 # preset.sh is at $EJPATH/preset/preset.sh; from engagement/ it's ../preset.sh.
 run_preset() {
     local config="$1"
-    cat > "$EJPATH/preset/preset.conf" << EOF
+    cat >"$EJPATH/preset/preset.conf" <<EOF
 CONFIG=$config
 IPADDR=192.168.1.100
 NETMASK=255.255.255.0

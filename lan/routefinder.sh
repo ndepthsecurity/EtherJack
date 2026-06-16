@@ -18,25 +18,25 @@ grep -i up nmaparp | awk '{print $2}' | grep -v Nmap | grep -v $MY_IP >$GTWY_IPS
 DONE=NO
 echo "ARP scan completed" >>$EJLOG
 while [ "$DONE" == "NO" ]; do
-	echo "Attempting to identify the gateway" >>$EJLOG
-	for GTWY_IP in $(cat $GTWY_IPS); do
-		echo "Testing $GTWY_IP as the gateway" >>$EJLOG
-		route add default gw $GTWY_IP
-		PortCheck=""
-		PortCheck="$(nmap -n -sT -p $TESTPORT $TESTIP | grep -i open | awk '{print $2}')"
-		if [ "$PortCheck" != "open" ]; then
-			echo "Incorrect gateway...try again" >>$EJLOG
-			ip route flush $GTWY_IP default
-			DONE=NO
-		else
-			echo "Found gateway at $GTWY_IP" >>$EJLOG
-			echo $GTWY_IP >$MY_GTWY_IP
-			DONE=YES
-			# Execute Payload
-			echo "Network and route setup complete" >>$EJLOG
-			echo "Calling home" >>$EJLOG
-			echo "############### END ROUTEFINDER ###############" >>$EJLOG
-			systemctl start Etherjack-payload
-		fi
-	done
+    echo "Attempting to identify the gateway" >>$EJLOG
+    for GTWY_IP in $(cat $GTWY_IPS); do
+        echo "Testing $GTWY_IP as the gateway" >>$EJLOG
+        route add default gw $GTWY_IP
+        PortCheck=""
+        PortCheck="$(nmap -n -sT -p $TESTPORT $TESTIP | grep -i open | awk '{print $2}')"
+        if [ "$PortCheck" != "open" ]; then
+            echo "Incorrect gateway...try again" >>$EJLOG
+            ip route flush $GTWY_IP default
+            DONE=NO
+        else
+            echo "Found gateway at $GTWY_IP" >>$EJLOG
+            echo $GTWY_IP >$MY_GTWY_IP
+            DONE=YES
+            # Execute Payload
+            echo "Network and route setup complete" >>$EJLOG
+            echo "Calling home" >>$EJLOG
+            echo "############### END ROUTEFINDER ###############" >>$EJLOG
+            systemctl start Etherjack-payload
+        fi
+    done
 done

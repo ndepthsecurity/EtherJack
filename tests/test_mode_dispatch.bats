@@ -14,21 +14,21 @@ setup() {
     mkdir -p "$EJPATH/lan" "$EJPATH/wifi" "$EJPATH/preset" "$EJPATH/files" "$EJPATH/bin"
 
     # Provide ejmotd so the cat command in each mode branch doesn't error
-    cp "$REPO_ROOT/files/ejmotd" "$EJPATH/files/ejmotd" 2>/dev/null \
-        || touch "$EJPATH/files/ejmotd"
+    cp "$REPO_ROOT/files/ejmotd" "$EJPATH/files/ejmotd" 2>/dev/null ||
+        touch "$EJPATH/files/ejmotd"
 
     # Lightweight sub-script stubs
     for entry in "lan/netfinder.sh:netfinder" "wifi/wifi.sh:wifi" "preset/preset.sh:preset"; do
         local path="${entry%%:*}"
         local name="${entry##*:}"
-        printf '#!/bin/bash\necho "%s called"\n' "$name" > "$EJPATH/$path"
+        printf '#!/bin/bash\necho "%s called"\n' "$name" >"$EJPATH/$path"
         chmod +x "$EJPATH/$path"
     done
 
     # Mock bin: init must be intercepted before the real /sbin/init runs
     export MOCK_BIN="$BATS_TEST_TMPDIR/bin"
     mkdir -p "$MOCK_BIN"
-    cat > "$MOCK_BIN/init" << 'EOF'
+    cat >"$MOCK_BIN/init" <<'EOF'
 #!/bin/bash
 echo "SHUTDOWN: init $*"
 exit 0
@@ -37,7 +37,7 @@ EOF
     export PATH="$MOCK_BIN:$PATH"
 
     # Minimal EtherJack.conf — EJMODE left blank; each test fills it via run_ej()
-    cat > "$EJPATH/EtherJack.conf" << EOF
+    cat >"$EJPATH/EtherJack.conf" <<EOF
 EJMODE=
 EJPATH=$EJPATH
 ENGAGEMENT=eng001
