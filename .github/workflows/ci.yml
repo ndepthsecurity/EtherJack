@@ -64,15 +64,6 @@ jobs:
           name: bats-test-results
           path: test-results/
 
-      - name: Prune old artifacts (keep last 3)
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh api "repos/${{ github.repository }}/actions/artifacts?name=bats-test-results&per_page=100" \
-            --jq '.artifacts | sort_by(.created_at) | reverse | .[3:] | .[].id' \
-          | xargs -r -I{} gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/{}"
-
       # --------------------------------------------------------------------------
       # Confirm every script is executable (permissions survive git clone)
       # --------------------------------------------------------------------------
